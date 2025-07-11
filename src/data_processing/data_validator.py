@@ -76,6 +76,43 @@ class CSVDataValidator(DataValidator):
         if missing_columns:
             raise DataValidationError(f"Missing required columns: {', '.join(missing_columns)}")
 
+class MaintIEValidator:
+    """MaintIE format validator for corpus samples"""
+    def __init__(self, config: Dict[str, Any] = None):
+        self.config = config or {}
+        self.logger = logging.getLogger(__name__)
+
+    def validate_sample(self, sample: Dict[str, Any]) -> bool:
+        required_fields = ['text', 'entities', 'relations']
+        for field in required_fields:
+            if field not in sample:
+                self.logger.warning(f"Missing required field: {field}")
+                return False
+        if not isinstance(sample['text'], str) or not sample['text'].strip():
+            self.logger.warning("Invalid or empty text")
+            return False
+        for entity in sample['entities']:
+            if not isinstance(entity.get('type', None), str):
+                self.logger.warning("Invalid entity type")
+                return False
+            if entity.get('start', 0) >= entity.get('end', 0):
+                self.logger.warning("Invalid entity span")
+                return False
+        entity_count = len(sample['entities'])
+        for relation in sample['relations']:
+            if not (0 <= relation.get('head', -1) < entity_count and 0 <= relation.get('tail', -1) < entity_count):
+                self.logger.warning("Invalid relation entity indices")
+                return False
+        return True
+
+    def validate_corpus(self, corpus: List[Dict[str, Any]]) -> List[int]:
+        """Return indices of invalid samples"""
+        invalid_indices = []
+        for i, sample in enumerate(corpus):
+            if not self.validate_sample(sample):
+                invalid_indices.append(i)
+        return invalid_indices
+
 # Example usage
 if __name__ == "__main__":
     # Sample JSON schema
