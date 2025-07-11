@@ -1,0 +1,11 @@
+# Core ML/DL Libraries
+torch
+torch_geometric
+
+# NLP and Embeddings
+sentence-transformers
+
+# Data Handling and Utilities
+numpy
+scikit-learn
+pyyaml

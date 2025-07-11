@@ -1,95 +1,85 @@
-# MaintIE LLM-GNN .gitignore
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
+
+# C extensions
 *.so
-*.egg
-*.egg-info/
-dist/
+
+# Distribution / packaging
+.Python
 build/
-*.log
-*.sqlite3
-*.db
-*.dat
-*.csv
-*.tsv
-*.json
-*.yaml
-*.yml
-*.h5
-*.ckpt
-*.pt
-*.pth
-*.onnx
-*.joblib
-*.npy
-*.npz
-*.pkl
-*.tmp
-*.bak
-*.swp
-*.swo
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
 
-# VSCode
-.vscode/
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Environment
-.env
-.env.*
-*.env
-*.envrc
-
-# Data & Results
-/data/
-/results/
-/logs/
-/models/
-*.log
-*.out
-*.err
-
-# Docker
-Dockerfile
-*.dockerignore
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Test & Coverage
-.coverage
+# Unit test / coverage reports
 htmlcov/
-.cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 .pytest_cache/
+cover/
 
-# Azure
-*.aml
-*.azureml
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# Experiment Tracking
-mlruns/
-tensorboard_logs/
-model_registry/
-experiments/
+# Spyder project files
+.spyderproject
+.spyproject
 
-# Misc
-*.gz
-*.zip
-*.tar
-*.tar.gz
-*.rar
-*.7z
+# Rope project files
+.ropeproject
 
-# Ignore secrets
-secrets.*
-*.key
-*.pem
-*.crt
-*.p12
-*.jks
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/

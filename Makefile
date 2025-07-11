@@ -1,61 +1,80 @@
-# MaintIE LLM-GNN Project Makefile
+# Makefile for MaintIE LLM-GNN Project
 
-.PHONY: help init-structure install-deps download-data setup-config verify-setup process-data train-baseline evaluate clean
+.PHONY: help setup install-deps load-data generate-embeddings build-graphs train evaluate test status clean pipeline
 
-help:  ## Show this help message
-	@echo "MaintIE LLM-GNN Project Commands:"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
+# Define the Python interpreter from the virtual environment.
+# This makes the Makefile more robust.
+PYTHON = venv/bin/python
+export PYTHONPATH=$(shell pwd)
 
-init-structure:  ## Create project directory structure
-	@echo "📁 Creating project structure..."
-	# TODO: Create all directories
-	# TODO: Add template files
-	# TODO: Initialize git repository
+# Default target
+help:
+	@echo "Available commands:"
+	@echo "  setup                - Initialize project environment (creates venv)"
+	@echo "  install-deps         - Install Python dependencies from requirements.txt"
+	@echo "  load-data            - (Placeholder) Run data loading script"
+	@echo "  generate-embeddings  - Generate LLM embeddings from raw data"
+	@echo "  build-graphs         - Build semantic similarity graphs from embeddings"
+	@echo "  train                - Run the training pipeline"
+	@echo "  evaluate             - Run the evaluation pipeline"
+	@echo "  test                 - Run all unit tests"
+	@echo "  pipeline             - Run the full pipeline (data -> train -> evaluate)"
+	@echo "  status               - (Placeholder) Show project status"
+	@echo "  clean                - (Placeholder) Clean generated files"
 
-install-deps:  ## Install Python dependencies
-	@echo "📦 Installing dependencies..."
-	# TODO: Install PyTorch ecosystem
-	# TODO: Install NLP libraries
-	# TODO: Install development tools
+# Setup commands
+setup:
+	@echo "Initializing Python virtual environment..."
+	python3 -m venv venv
+	@echo "Virtual environment 'venv' created."
+	@echo "Activate it by running: source venv/bin/activate"
 
-download-data:  ## Download MaintIE dataset
-	@echo "📊 Downloading MaintIE data..."
-	# TODO: Download gold standard data
-	# TODO: Download silver corpus
-	# TODO: Download ontology files
+install-deps:
+	@echo "Installing dependencies from requirements.txt..."
+	@if [ -f "venv/bin/pip" ]; then \
+		$(PYTHON) -m pip install -r requirements.txt; \
+	else \
+		echo "Virtual environment not found. Please run 'make setup' first."; \
+	fi
 
-setup-config:  ## Setup configuration files
-	@echo "⚙️ Setting up configuration..."
-	# TODO: Copy template configs
-	# TODO: Set environment variables
-	# TODO: Create local overrides
+# Data processing commands
+load-data:
+	@echo "Running data loading script..."
+	$(PYTHON) -c "from src.data_processing.data_loader import main; main()"
 
-verify-setup:  ## Verify installation
-	@echo "✅ Verifying setup..."
-	# TODO: Test imports
-	# TODO: Verify data access
-	# TODO: Test model loading
+generate-embeddings:
+	@echo "Generating LLM embeddings..."
+	$(PYTHON) -c "from src.data_processing.embedding_generator import main; main()"
 
-process-data:  ## Process data for training
-	@echo "🔧 Processing data..."
-	# TODO: Generate embeddings
-	# TODO: Build graphs
-	# TODO: Create train/val splits
+build-graphs:
+	@echo "Building semantic similarity graphs..."
+	$(PYTHON) -c "from src.data_processing.graph_builder import main; main()"
 
-train-baseline:  ## Train baseline model
-	@echo "🚀 Training baseline model..."
-	# TODO: Run silver corpus training
-	# TODO: Save model checkpoints
-	# TODO: Log training progress
+# Training and Evaluation commands
+train:
+	@echo "Running training pipeline..."
+	$(PYTHON) scripts/train.py
 
-evaluate:  ## Evaluate on gold standard
-	@echo "📊 Evaluating model..."
-	# TODO: Run gold standard evaluation
-	# TODO: Generate performance report
-	# TODO: Compare with SPERT baseline
+evaluate:
+	@echo "Running evaluation pipeline..."
+	$(PYTHON) scripts/evaluate.py
 
-clean:  ## Clean generated files
-	@echo "🧹 Cleaning up..."
-	# TODO: Remove temporary files
-	# TODO: Clean cache directories
-	# TODO: Reset processed data
+# Testing command
+test:
+	@echo "Running unit tests..."
+	$(PYTHON) -m unittest discover -s tests
+
+# Full pipeline
+pipeline: load-data generate-embeddings build-graphs train evaluate
+
+# Status and Clean commands (placeholders)
+status:
+	@echo "Project status: (to be implemented)"
+
+clean:
+	@echo "Cleaning generated files: (to be implemented)"
+	rm -f data/processed/*.pkl
+	rm -f results/models/*.pt
+	rm -f results/evaluation/*.json
+	find . -type d -name "__pycache__" -exec rm -r {} +
+	@echo "Cleaned processed data, models, results, and __pycache__."

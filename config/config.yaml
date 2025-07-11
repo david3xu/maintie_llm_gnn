@@ -1,0 +1,43 @@
+# 🔥 P0 - Critical Configuration
+model:
+  embedding_dim: 384                    # LLM embedding dimension
+  hidden_dim: 256                      # GNN hidden dimension
+  num_gnn_layers: 2                    # Number of GNN layers
+  dropout: 0.1                         # Dropout rate
+
+# Complexity level mapping
+complexity_levels:
+  FG-0:
+    entity_classes: 5                  # Root level entities
+    relation_classes: 6
+  FG-1:
+    entity_classes: 34                 # Second level
+    relation_classes: 6
+  FG-2:
+    entity_classes: 128                # Third level
+    relation_classes: 6
+  FG-3:
+    entity_classes: 224                # Full hierarchy
+    relation_classes: 6
+
+# Training configuration
+training:
+  batch_size: 16
+  learning_rate: 0.001
+  num_epochs: 50
+  patience: 5                          # Early stopping
+
+# Data configuration
+data:
+  similarity_threshold: 0.7            # Graph edge threshold
+  k_neighbors: 10                      # k-NN for graph building
+  train_split: 0.8                     # Train/val split ratio
+
+# File paths
+paths:
+  gold_corpus: "data/raw/gold_release.json"
+  silver_corpus: "data/raw/silver_release.json"
+  ontology: "data/raw/scheme.json"
+  embeddings: "data/processed/embeddings.pkl"
+  graphs: "data/processed/graphs.pkl"
+  models: "results/models/"
