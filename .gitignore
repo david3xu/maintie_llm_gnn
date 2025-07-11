@@ -1,0 +1,95 @@
+# MaintIE LLM-GNN .gitignore
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+*.sqlite3
+*.db
+*.dat
+*.csv
+*.tsv
+*.json
+*.yaml
+*.yml
+*.h5
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.joblib
+*.npy
+*.npz
+*.pkl
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# VSCode
+.vscode/
+
+# Environment
+.env
+.env.*
+*.env
+*.envrc
+
+# Data & Results
+/data/
+/results/
+/logs/
+/models/
+*.log
+*.out
+*.err
+
+# Docker
+Dockerfile
+*.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test & Coverage
+.coverage
+htmlcov/
+.cache/
+.pytest_cache/
+
+# Azure
+*.aml
+*.azureml
+
+# Experiment Tracking
+mlruns/
+tensorboard_logs/
+model_registry/
+experiments/
+
+# Misc
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Ignore secrets
+secrets.*
+*.key
+*.pem
+*.crt
+*.p12
+*.jks
